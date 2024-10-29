@@ -8,6 +8,13 @@ import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { GoDatabase } from "react-icons/go";
 
+import {
+  analyticsData,
+  logout,
+} from "../../redux/features/userTask/userTaskSlice";
+
+import { useDispatch, useSelector } from "react-redux";
+
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 
@@ -15,6 +22,12 @@ function Navbar() {
   const [activeLink, setActiveLink] = useState("board");
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state.userTask);
+
+  useEffect(() => {
+    if (!isLoggedIn) navigate("/login");
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     /* This will act to set the active link path */
@@ -26,6 +39,18 @@ function Navbar() {
       setActiveLink("settings");
     }
   }, [location.pathname]);
+
+  const fetchCardDetails = () => {};
+
+  const fetchAnalytics = () => {
+    dispatch(analyticsData());
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.clear();
+    setModalOpen(false);
+  };
 
   const customStyles = {
     content: {
@@ -46,14 +71,7 @@ function Navbar() {
     <div className={styles.navbar}>
       <Modal isOpen={modalOpen} style={customStyles}>
         <h3>Are you sure you want to Logout?</h3>
-        <button
-          className={styles.continueBtn}
-          onClick={() => {
-            navigate("/login");
-            localStorage.clear();
-            setModalOpen(false);
-          }}
-        >
+        <button className={styles.continueBtn} onClick={handleLogout}>
           Yes,Logout
         </button>
         <button
@@ -77,6 +95,7 @@ function Navbar() {
           className={`${styles.navGroup} ${
             activeLink === "board" ? styles.activeLink : ""
           }`}
+          onClick={fetchCardDetails}
         >
           <MdOutlineSpaceDashboard size={"23px"} color="#707070" />
           <p>Board</p>
@@ -86,6 +105,7 @@ function Navbar() {
           className={`${styles.navGroup} ${
             activeLink === "analytics" ? styles.activeLink : ""
           }`}
+          onClick={fetchAnalytics}
         >
           <GoDatabase size={"23px"} color="#707070" />
           <p>Analytics</p>
