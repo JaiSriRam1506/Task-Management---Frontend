@@ -13,7 +13,7 @@ import Analytics from "./pages/analytics/Analytics";
 /* Do Lazy Loading for required things */
 const AppLayout = lazy(() => import("./component/layouts/AppLayout"));
 const AuthLayout = lazy(() => import("./component/layouts/AuthLayout"));
-const ViewCard = lazy(() => import("./pages/viewCard/ViewCard"));
+const ShowCard = lazy(() => import("./pages/showCard/ShowCard"));
 
 function App() {
   return (
@@ -45,10 +45,10 @@ function App() {
           <Route path="login" element={<Login />} />
         </Route>
         <Route
-          path={"/view/:cardId"}
+          path={"/show/:cardId"}
           element={
             <Suspense fallback={<Loader />}>
-              <ViewCard />
+              <ShowCard />
             </Suspense>
           }
         />

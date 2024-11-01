@@ -2,7 +2,7 @@ import axios from "axios";
 
 const getToken = () => localStorage.getItem("token");
 
-const BACKEND_URL = import.meta.env.VITE_APP_BASE_URL;
+const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
 
 const register = async (userData) => {
   const API_URL = `${BACKEND_URL}api/v1/auth/register`;

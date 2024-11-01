@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./viewCard.module.css";
+import styles from "./showCard.module.css";
 import { useParams } from "react-router-dom";
 import logo from "..//../assets/codesandbox.svg";
 import { GoDotFill } from "react-icons/go";
@@ -9,7 +9,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getCard } from "../../redux/features/userTask/userTaskSlice";
 
-function ViewCard() {
+function ShowCard() {
   const [cardData, setCardData] = useState(null);
   const { isLoading } = useSelector((state) => state.userTask);
   const { cardId } = useParams();
@@ -31,7 +31,7 @@ function ViewCard() {
   const CardPriority = priorities[cardData?.priority];
   const fetchCardData = async () => {
     const response = await dispatch(getCard(cardId));
-    setCardData(response.data);
+    setCardData(response?.payload?.data);
   };
   useEffect(() => {
     fetchCardData();
@@ -40,7 +40,7 @@ function ViewCard() {
     <div className={styles.viewCardContainer}>
       <div className={styles.logo}>
         <img src={logo} alt="logo" />
-        <p>Promanage</p>
+        <p>Pro Manage</p>
       </div>
       <div className={styles.cardContainer}>
         {isLoading ? (
@@ -93,4 +93,4 @@ function ViewCard() {
   );
 }
 
-export default ViewCard;
+export default ShowCard;
