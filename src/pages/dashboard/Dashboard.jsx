@@ -16,7 +16,7 @@ function Dashboard() {
   const currentDate = format(new Date(), "do MMM, yyyy");
   const [dropDown, setDropDown] = useState(false);
   const [selectedFilter, setSelectedOption] = useState("This Week");
-  const [assignee, setAssignee] = useState([]);
+  const [assignee, setAssignee] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const dispatch = useDispatch();
